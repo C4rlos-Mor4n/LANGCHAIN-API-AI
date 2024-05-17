@@ -10,12 +10,16 @@ import {
 import { config } from "../config";
 
 class chatServices {
-  async runChatServices(question: string, customer_name: string) {
+  async runChatServices(
+    question: string,
+    customer_name: string,
+    collectionName: string
+  ) {
     question = question.replace(/\{/g, "\\{").replace(/\}/g, "\\}");
 
     const prompt = createPrompt(customer_name);
     const outputParser = new StringOutputParser();
-    const vectorStore = await VectorStoreService.getVectorStore();
+    const vectorStore = await VectorStoreService.getVectorStore(collectionName);
     const modelAi = await ModelService.getModel();
     const NumberRetriver = parseInt(config.RETRIVER as string);
 
@@ -27,6 +31,7 @@ class chatServices {
               question,
               NumberRetriver
             );
+
             return formatDocumentsAsString(relevantDocs);
           },
           question: new RunnablePassthrough(),

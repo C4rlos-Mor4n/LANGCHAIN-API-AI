@@ -4,7 +4,7 @@ import { TaskType } from "@google/generative-ai";
 import { config } from "../config";
 
 export class VectorStoreService {
-  static async getVectorStore() {
+  static async getVectorStore(collectionName: string) {
     if (config.EMBEDDINGS !== "embedding-001") {
       throw new Error("Configuración de embeddings no válida");
     }
@@ -17,7 +17,7 @@ export class VectorStoreService {
 
     if (config.VECTOR_STORE === "qdrant") {
       return QdrantVectorStore.fromExistingCollection(embeddings, {
-        collectionName: config.QDRANT_NAME_INDEX,
+        collectionName: collectionName,
       });
     }
 

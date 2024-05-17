@@ -5,18 +5,21 @@ import { splitPDFText, splitPlainText } from "../splitters/textsplitting";
 import { logger } from "../utils/logger";
 
 class IngestServices {
-  async uploadIngestDocument(document: IngestDocument): Promise<void> {
+  async uploadIngestDocument(
+    document: IngestDocument,
+    collectionName: string
+  ): Promise<void> {
     try {
       logger.info(`Procesando archivo: ${document.filename}`, document);
 
       if (document.mimetype === "application/pdf") {
         const rawDocs = await loadPDF(document.path);
         const docs = await splitPDFText(rawDocs);
-        await runEmbeddings(docs, document.filename);
+        await runEmbeddings(docs, document.filename, collectionName);
       } else if (document.mimetype === "text/plain") {
         const rawDocs = await loadPlainText(document.path);
         const docs = await splitPlainText(rawDocs);
-        await runEmbeddings(docs, document.filename);
+        await runEmbeddings(docs, document.filename, collectionName);
       } else {
         throw new Error(
           `Formato de archivo no soportado: ${document.mimetype}`

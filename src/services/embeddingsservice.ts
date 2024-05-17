@@ -7,13 +7,14 @@ import { EmbeddingsInterface } from "@langchain/core/embeddings";
 
 export async function runEmbeddings(
   docs: Document<Record<string, any>>[],
-  filename: string
+  filename: string,
+  collectionName: string
 ) {
   const embeddings = getEmbeddings(filename);
 
   try {
     if (config.VECTOR_STORE === "qdrant") {
-      await uploadToQdrant(docs, embeddings);
+      await uploadToQdrant(docs, embeddings, collectionName);
     }
   } catch (error) {
     handleEmbeddingError(error);
@@ -22,7 +23,8 @@ export async function runEmbeddings(
 
 async function uploadToQdrant(
   docs: Document<Record<string, any>>[],
-  embeddings: EmbeddingsInterface
+  embeddings: EmbeddingsInterface,
+  collectionName: string
 ) {
   if (!config.QDRANT_URL || !config.QDRANT_API_KEY) {
     throw new Error("Qdrant URL or API key vars missing");
@@ -31,5 +33,6 @@ async function uploadToQdrant(
   await QdrantVectorStore.fromDocuments(docs, embeddings, {
     url: config.QDRANT_URL,
     apiKey: config.QDRANT_API_KEY,
+    collectionName: collectionName,
   });
 }

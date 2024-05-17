@@ -6,6 +6,10 @@ import ingestServices from "../services/ingestservices";
 export const uploadIngestDocument = upload.array("archivos", 10);
 export async function handleUpload(req: Request, res: Response) {
   try {
+    const collectionName = req.body.collectionName as string;
+    if (!collectionName)
+      return res.status(400).send("Falta el nombre de la colección");
+
     const files = req.files as Express.Multer.File[] | undefined;
     if (files && files.length > 0) {
       const documents = await Promise.all(
@@ -17,8 +21,8 @@ export async function handleUpload(req: Request, res: Response) {
             size: file.size,
           };
 
-          await ingestServices.uploadIngestDocument(document);
-          return document;  
+          await ingestServices.uploadIngestDocument(document, collectionName);
+          return document;
         })
       );
 
