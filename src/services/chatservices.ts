@@ -13,11 +13,13 @@ class chatServices {
   async runChatServices(
     question: string,
     customer_name: string,
-    collectionName: string
+    collectionName: string,
+    PromptName: string,
+    History: string
   ) {
     question = question.replace(/\{/g, "\\{").replace(/\}/g, "\\}");
 
-    const prompt = createPrompt(customer_name);
+    const prompt = createPrompt(customer_name, PromptName, History);
     const outputParser = new StringOutputParser();
     const vectorStore = await VectorStoreService.getVectorStore(collectionName);
     const modelAi = await ModelService.getModel();
