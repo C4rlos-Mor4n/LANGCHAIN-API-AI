@@ -4,3 +4,10 @@ export interface IngestDocument {
   mimetype: string;
   size: number;
 }
+
+export interface Prompt {
+  path: string;
+  filename: string;
+  mimetype: string;
+  size: number;
+}
