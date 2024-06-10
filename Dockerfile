@@ -34,6 +34,8 @@ ENV PNPM_HOME=/usr/local/bin
 
 RUN npm cache clean --force && pnpm install --production --ignore-scripts && pnpm install pm2 -g \
     && addgroup -g 1001 -S nodejs && adduser -S -u 1001 nodejs \
-    && rm -rf $PNPM_HOME/.npm $PNPM_HOME/.node-gyp 
+    && rm -rf $PNPM_HOME/.npm $PNPM_HOME/.node-gyp
+
+RUN mkdir -p /app/templates/prompt_templates
 
 CMD ["pm2-runtime", "start", "./dist/index.js"]
