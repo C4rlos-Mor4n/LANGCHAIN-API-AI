@@ -13,8 +13,6 @@ function readTemplateFromFile(fileName: string) {
   const filePath = path.join(
     dirname,
     "..",
-    "..",
-    "src",
     "templates",
     "prompt_templates",
     `${fileName}.txt`
