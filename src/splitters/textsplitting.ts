@@ -3,7 +3,7 @@ import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 
 export async function splitPDFText(rawDocs: Document<Record<string, any>>[]) {
   const splitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 2000,
+    chunkSize: 1000,
     chunkOverlap: 300,
   });
   return await splitter.splitDocuments(rawDocs);
@@ -11,9 +11,9 @@ export async function splitPDFText(rawDocs: Document<Record<string, any>>[]) {
 
 export async function splitPlainText(rawDocs: Document<Record<string, any>>[]) {
   const splitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 2000,
+    chunkSize: 1000,
     chunkOverlap: 200,
-    separators: ["|", "#", "##", ">", "-", "```"],
+    // separators: ["|", "#", "##", ">", "-", "```"],
   });
   return await splitter.splitDocuments(rawDocs);
 }
