@@ -2,6 +2,7 @@ import "dotenv/config";
 
 export const config = {
   port: process.env.PORT || 5556,
+  apiKey: process.env.API_KEY || "",
   host: process.env.HOST || "localhost",
   QDRANT_URL: process.env.QDRANT_URL || "",
   QDRANT_API_KEY: process.env.QDRANT_API_KEY || "",
