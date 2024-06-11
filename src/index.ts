@@ -8,6 +8,15 @@ import health from "./routes/health";
 const app = express();
 app.use(express.json());
 
+// middleware for token
+app.use((req, res, next) => {
+  if (req.headers["apikey"] === config.apiKey) {
+    next();
+  } else {
+    res.status(403).send("Unauthorized");
+  }
+});
+
 app.use("/ingest", ingest);
 app.use("/ai", chatModel);
 app.use("/prompt", SavePrompt);
