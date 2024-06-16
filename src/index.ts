@@ -8,6 +8,8 @@ import health from "./routes/health";
 const app = express();
 app.use(express.json());
 
+app.use("/health", health);
+
 // middleware for token
 app.use((req, res, next) => {
   if (req.headers["apikey"] === config.apiKey) {
@@ -20,7 +22,6 @@ app.use((req, res, next) => {
 app.use("/ingest", ingest);
 app.use("/ai", chatModel);
 app.use("/prompt", SavePrompt);
-app.use("/health", health);
 
 app.listen(config.port, () => {
   console.log(`Server running on http://${config.host}:${config.port}`);
