@@ -24,8 +24,8 @@ function readTemplateFromFile(fileName: string) {
     const template = fs.readFileSync(filePath, "utf-8");
     return template;
   } catch (error) {
-    console.error(`Error leyendo el archivo ${fileName}:`, error);
-    throw new Error(`No se pudo leer el archivo ${fileName}`);
+    console.error(`Error leyendo al leer archivo ${fileName} o no existe:`);
+    throw new Error(`No se pudo leer el archivo ${fileName} o no existe`);
   }
 }
 export function createPrompt(
