@@ -16,4 +16,6 @@ export const config = {
   VECTOR_STORE: process.env.VECTOR_STORE || "",
   QDRANT_NAME_INDEX: process.env.QDRANT_NAME_INDEX || "",
   CLOUDFLARE_MODEL_NAME: process.env.CLOUDFLARE_MODEL_NAME || "",
+  POCKETBASE_HOST: process.env.POCKETBASE_HOST || "",
+  POCKETBASE_DB_NAME: process.env.POCKETBASE_DB_NAME || "",
 };
