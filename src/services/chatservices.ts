@@ -15,14 +15,16 @@ class chatServices {
     customer_name: string,
     collectionName: string,
     PromptName: string,
-    History: string
+    History: string,
+    apiKey: string
   ) {
     question = question.replace(/\{/g, "\\{").replace(/\}/g, "\\}");
 
     const prompt = createPrompt(customer_name, PromptName, History);
     const outputParser = new StringOutputParser();
     const vectorStore = await VectorStoreService.getVectorStore(collectionName);
-    const modelAi = await ModelService.getModel();
+    const serviceWithApiKey = new ModelService(apiKey);
+    const modelAi = await serviceWithApiKey.getModel();
     const NumberRetriver = parseInt(config.RETRIVER as string);
 
     try {

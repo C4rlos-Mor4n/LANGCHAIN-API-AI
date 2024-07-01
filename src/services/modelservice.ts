@@ -4,7 +4,13 @@ import { ChatOpenAI } from "@langchain/openai";
 import { config } from "../config";
 
 export class ModelService {
-  static async getModel() {
+  private apiKey: string;
+
+  constructor(apiKey?: string) {
+    this.apiKey = apiKey;
+  }
+
+  async getModel() {
     switch (config.ModelAI) {
       case "OpenAI":
         return this.createOpenAIModel();
@@ -17,16 +23,19 @@ export class ModelService {
     }
   }
 
-  private static createOpenAIModel() {
-    if (!config.OPENAI_API_KEY) throw new Error("OPENAI_API_KEY is required");
+  private createOpenAIModel() {
+    const effectiveApiKey = this.apiKey || config.OPENAI_API_KEY;
+    console.log("effectiveApiKey", effectiveApiKey);
+    if (!effectiveApiKey) throw new Error("OPENAI_API_KEY is required");
     return new ChatOpenAI({
       model: process.env.OPENAI_MODEL || "gpt-3.5-turbo-0125",
-      apiKey: config.OPENAI_API_KEY,
+      apiKey: effectiveApiKey,
     });
   }
 
-  private static createCloudflareModel() {
-    if (!config.CLOUDFLARE_ACCOUNT_ID || !config.CLOUDFLARE_API_TOKEN) {
+  private createCloudflareModel() {
+    const effectiveApiKey = this.apiKey || config.CLOUDFLARE_API_TOKEN;
+    if (!config.CLOUDFLARE_ACCOUNT_ID || !effectiveApiKey) {
       throw new Error("Cloudflare account settings are required");
     }
 
@@ -35,14 +44,16 @@ export class ModelService {
         config.CLOUDFLARE_MODEL_NAME ||
         "@hf/meta-llama/meta-llama-3-8b-instruct",
       cloudflareAccountId: config.CLOUDFLARE_ACCOUNT_ID,
-      cloudflareApiToken: config.CLOUDFLARE_API_TOKEN,
+      cloudflareApiToken: effectiveApiKey,
     });
   }
 
-  private static createGeminiModel() {
-    if (!config.GOOGLE_API_KEY) throw new Error("GOOGLE_API_KEY is required");
+  private createGeminiModel() {
+    const effectiveApiKey = this.apiKey || config.GOOGLE_API_KEY;
+    if (!effectiveApiKey) throw new Error("GOOGLE_API_KEY is required");
     return new ChatGoogleGenerativeAI({
       modelName: "gemini-pro",
+      apiKey: effectiveApiKey,
     });
   }
 }

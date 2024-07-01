@@ -1,14 +1,59 @@
 import Pocketbase from "pocketbase";
-import 'dotenv/config';
+import { config } from "../config";
 
 export async function getOpenAIKey(collectionName: string) {
   try {
-    const pb = new Pocketbase('aca viene config.POCKETBASE_HOST'); // ---> modificar para que use desde la config
+    const pb = new Pocketbase(`${config.POCKETBASE_HOST}`);
     const response = await pb
-      .collection('aca viene config.POCKETBASE_DB_NAME') // ---> modificar para que use desde la config
-      .getFirstListItem(`collectionName="${collectionName}"`);
+      .collection(`${config.POCKETBASE_DB_NAME}`)
+      .getFirstListItem(`projectName="${collectionName}"`);
     return response;
   } catch (error) {
-    return "Key does not exist";
+    return {
+      apiKey: "",
+    };
+  }
+}
+
+export async function addOrUpdateOpenAIKey(
+  collectionName: string,
+  apiKey: string
+) {
+  try {
+    const pb = new Pocketbase(`${config.POCKETBASE_HOST}`);
+    const data = {
+      projectName: collectionName,
+      apiKey: apiKey,
+    };
+
+    // Verificar si el projectName ya existe
+    const existingProject = await pb
+      .collection(`${config.POCKETBASE_DB_NAME}`)
+      .getFirstListItem(`projectName="${collectionName}"`)
+      .catch(() => null);
+
+    let response;
+    if (existingProject) {
+      // Si el projectName existe, actualizar el apiKey
+      response = await pb
+        .collection(`${config.POCKETBASE_DB_NAME}`)
+        .update(existingProject.id, { apiKey: apiKey });
+    } else {
+      // Si el projectName no existe, crear un nuevo registro
+      response = await pb
+        .collection(`${config.POCKETBASE_DB_NAME}`)
+        .create(data);
+    }
+
+    return {
+      status: "success",
+      message: "Key added or updated",
+      response,
+    };
+  } catch (error) {
+    return {
+      status: "error",
+      message: error.message,
+    };
   }
 }
