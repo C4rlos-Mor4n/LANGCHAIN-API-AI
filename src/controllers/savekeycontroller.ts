@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { addOrUpdateOpenAIKey } from "~/services/dbservice";
+import { addOrUpdateOpenAIKey } from "../services/dbservice";
 
 export async function saveKey(req: Request, res: Response) {
   const { collectionName, apiKey } = req.body;
