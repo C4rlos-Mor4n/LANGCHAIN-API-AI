@@ -43,10 +43,10 @@ class chatServices {
           },
           question: new RunnablePassthrough(),
         },
-        prompt,
-        modelAi,
+        prompt as any,
+        modelAi as any,
         outputParser,
-      ]);
+      ]as any);
 
       const result: any = await chain.invoke(question);
 
