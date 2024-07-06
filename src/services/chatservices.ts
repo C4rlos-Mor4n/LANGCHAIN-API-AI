@@ -27,7 +27,7 @@ class chatServices {
     const serviceWithApiKey = new ModelService(apiKey);
     const modelAi = await serviceWithApiKey.getModel();
 
-    console.log("Model AI", modelAi);
+    // console.log("Model AI", modelAi);
 
     const NumberRetriver = parseInt(config.RETRIVER as string);
 
