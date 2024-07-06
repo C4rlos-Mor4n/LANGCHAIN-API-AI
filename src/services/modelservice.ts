@@ -1,5 +1,6 @@
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { ChatCloudflareWorkersAI } from "@langchain/cloudflare";
+import { ChatAnthropic } from "@langchain/anthropic";
 import { ChatOpenAI } from "@langchain/openai";
 import { config } from "../config";
 
@@ -18,6 +19,8 @@ export class ModelService {
         return this.createCloudflareModel();
       case "Gemini":
         return this.createGeminiModel();
+      case "Anthropic":
+        return this.createAnthropicModel();
       default:
         throw new Error("Configuración de modelo de IA no válida");
     }
@@ -55,5 +58,14 @@ export class ModelService {
       modelName: "gemini-pro",
       apiKey: effectiveApiKey,
     });
+  }
+
+  private createAnthropicModel() {
+    const effectiveApiKey = this.apiKey || config.ANTHROPIC_API_KEY;
+    if (!effectiveApiKey) throw new Error("ANTHROPIC_API_KEY is required");
+    return new ChatAnthropic({
+      model:"claude-3-5-sonnet-20240620",
+      apiKey: effectiveApiKey,
+    })
   }
 }

@@ -9,6 +9,7 @@ import {
 } from "@langchain/core/runnables";
 import { config } from "../config";
 
+
 class chatServices {
   async runChatServices(
     question: string,
@@ -25,6 +26,9 @@ class chatServices {
     const vectorStore = await VectorStoreService.getVectorStore(collectionName);
     const serviceWithApiKey = new ModelService(apiKey);
     const modelAi = await serviceWithApiKey.getModel();
+
+    console.log("Model AI", modelAi);
+
     const NumberRetriver = parseInt(config.RETRIVER as string);
 
     try {
@@ -35,7 +39,6 @@ class chatServices {
               question,
               NumberRetriver
             );
-
             return formatDocumentsAsString(relevantDocs);
           },
           question: new RunnablePassthrough(),
