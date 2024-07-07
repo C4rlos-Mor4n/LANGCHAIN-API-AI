@@ -25,7 +25,8 @@ function readTemplateFromFile(fileName: string) {
     return template;
   } catch (error) {
     console.error(`Error leyendo al leer archivo ${fileName} o no existe:`);
-    throw new Error(`No se pudo leer el archivo ${fileName} o no existe`);
+    // throw new Error(`No se pudo leer el archivo ${fileName} o no existe`);
+    return "Responde con esta frase: He identificado un error en tu solicitud, por favor genera el template.";
   }
 }
 export function createPrompt(
