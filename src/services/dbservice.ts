@@ -7,10 +7,13 @@ export async function getOpenAIKey(collectionName: string) {
     const response = await pb
       .collection(`${config.POCKETBASE_DB_NAME}`)
       .getFirstListItem(`projectName="${collectionName}"`);
+
     return response;
   } catch (error) {
     return {
-      apiKey: "",
+      apiKeyAnthropic: "",
+      apiKeyOpenAI: "",
+      apikey: "",
     };
   }
 }
