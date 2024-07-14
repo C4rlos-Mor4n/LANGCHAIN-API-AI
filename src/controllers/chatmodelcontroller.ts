@@ -13,22 +13,40 @@ export const responseChatModel = async (req: Request, res: Response) => {
     });
   }
 
-  const { apiKey } = await getOpenAIKey(collectionName);
+  const { apikey, apiKeyAnthropic, apiKeyOpenAI } = await getOpenAIKey(
+    collectionName
+  );
 
-  if (!apiKey) {
+  if (!apiKeyAnthropic || !apiKeyOpenAI) {
     return res.status(400).json({
-      message: "No se encontró la clave de API, para el collectionName dado.",
+      message:
+        "No se encontró la clave de API Anthropic o OpenAI para el proyecto",
     });
   }
 
-  const { Response } = await chat.runChatServices(
-    Question,
-    Name,
-    collectionName,
-    PromptName,
-    History,
-    apiKey
-  );
+  try {
+    const { Response } = await chat.runChatServices(
+      Question,
+      Name,
+      collectionName,
+      PromptName,
+      History,
+      apiKeyAnthropic
+    );
 
-  return res.status(200).json({ Response });
+    return res.status(200).json({ Response });
+  } catch (error) {
+    const { Response } = await chat.runChatServices(
+      Question,
+      Name,
+      collectionName,
+      PromptName,
+      History,
+      apiKeyOpenAI
+    );
+
+    console.log("ESTO DA LA RESPUESTA", Response);
+
+    return res.status(200).json({ Response });
+  }
 };
