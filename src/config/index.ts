@@ -19,4 +19,5 @@ export const config = {
   POCKETBASE_HOST: process.env.POCKETBASE_HOST || "",
   POCKETBASE_DB_NAME: process.env.POCKETBASE_DB_NAME || "",
   ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY || "",
+  NUMBER_PETICIONES: process.env.NUMBER_PETICIONES || 5,
 };

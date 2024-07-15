@@ -1,8 +1,15 @@
-import { Request, Response } from "express";
 import { chatServices } from "../services/chatservices";
 import { getOpenAIKey } from "../services/dbservice";
+import { Request, Response } from "express";
+import { config } from "../config";
+import Queue from "queue-promise";
 
 const chat = new chatServices();
+
+const queue = new Queue({
+  concurrent: config.NUMBER_PETICIONES as any,
+  interval: 1000, // intervalo opcional entre trabajos
+});
 
 export const responseChatModel = async (req: Request, res: Response) => {
   const { Question, Name, collectionName, PromptName, History } = req.body;
@@ -13,9 +20,7 @@ export const responseChatModel = async (req: Request, res: Response) => {
     });
   }
 
-  const { apikey, apiKeyAnthropic, apiKeyOpenAI } = await getOpenAIKey(
-    collectionName
-  );
+  const { apiKeyAnthropic, apiKeyOpenAI } = await getOpenAIKey(collectionName);
 
   if (!apiKeyAnthropic || !apiKeyOpenAI) {
     return res.status(400).json({
@@ -25,28 +30,35 @@ export const responseChatModel = async (req: Request, res: Response) => {
   }
 
   try {
-    const { Response } = await chat.runChatServices(
-      Question,
-      Name,
-      collectionName,
-      PromptName,
-      History,
-      apiKeyAnthropic
-    );
+    queue.enqueue(async () => {
+      try {
+        const { Response } = await chat.runChatServices(
+          Question,
+          Name,
+          collectionName,
+          PromptName,
+          History,
+          apiKeyAnthropic
+        );
 
-    return res.status(200).json({ Response });
-  } catch (error) {
-    const { Response } = await chat.runChatServices(
-      Question,
-      Name,
-      collectionName,
-      PromptName,
-      History,
-      apiKeyOpenAI
-    );
+        res.status(200).json({ Response });
+      } catch (error) {
+        const { Response } = await chat.runChatServices(
+          Question,
+          Name,
+          collectionName,
+          PromptName,
+          History,
+          apiKeyOpenAI
+        );
 
-    console.log("ESTO DA LA RESPUESTA", Response);
-
-    return res.status(200).json({ Response });
+        res.status(200).json({ Response });
+      }
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "Error procesando la solicitud en la cola",
+      error: err.message,
+    });
   }
 };
