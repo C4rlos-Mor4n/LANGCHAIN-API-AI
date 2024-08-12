@@ -7,7 +7,7 @@ import Queue from "queue-promise";
 const chat = new chatServices();
 
 const queue = new Queue({
-  concurrent: config.NUMBER_PETICIONES as any,
+  concurrent: config.NUMBER_OF_REQUESTS as any,
   interval: 1000, // intervalo opcional entre trabajos
 });
 
