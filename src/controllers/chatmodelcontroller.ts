@@ -38,7 +38,7 @@ export const responseChatModel = async (req: Request, res: Response) => {
           collectionName,
           PromptName,
           History,
-          apiKeyAnthropic
+          apiKeyOpenAI
         );
 
         res.status(200).json({ Response });
@@ -49,7 +49,7 @@ export const responseChatModel = async (req: Request, res: Response) => {
           collectionName,
           PromptName,
           History,
-          apiKeyOpenAI
+          apiKeyAnthropic
         );
 
         res.status(200).json({ Response });
