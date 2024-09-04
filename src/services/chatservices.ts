@@ -8,7 +8,9 @@ import {
   RunnableSequence,
 } from "@langchain/core/runnables";
 import { config } from "../config";
+import Logger from "../utils/logger";
 
+const logger = new Logger();
 
 class chatServices {
   async runChatServices(
@@ -27,7 +29,6 @@ class chatServices {
     const serviceWithApiKey = new ModelService(apiKey);
     const modelAi = await serviceWithApiKey.getModel();
 
-    // console.log("Model AI", modelAi);
 
     const NumberRetriver = parseInt(config.RETRIVER as string);
 
@@ -56,11 +57,9 @@ class chatServices {
 
       return Payload;
     } catch (error) {
-      console.error(
-        "Error en la cadena de ejecución en el servicio de chat",
-        error
-      );
-      throw error;
+      logger.error(`Error en la cadena de ejecución en el servicio de chat: ${error}`);
+      // throw error;
+      return;
     }
   }
 }

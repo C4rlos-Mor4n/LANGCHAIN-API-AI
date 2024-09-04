@@ -2,7 +2,9 @@ import { IngestDocument } from "../interfaces";
 import { runEmbeddings } from "./embeddingsservice";
 import { loadPDF, loadPlainText } from "../loaders/documentloaders";
 import { splitPDFText, splitPlainText } from "../splitters/textsplitting";
-import { logger } from "../utils/logger";
+import Logger from "../utils/logger";
+
+const logger = new Logger();
 
 class IngestServices {
   async uploadIngestDocument(
@@ -10,7 +12,7 @@ class IngestServices {
     collectionName: string
   ): Promise<void> {
     try {
-      logger.info(`Procesando archivo: ${document.filename}`, document);
+      logger.log(`Procesando archivo: ${document.filename}, archivo: ${document}`);
 
       if (document.mimetype === "application/pdf") {
         const rawDocs = await loadPDF(document.path);
@@ -21,13 +23,16 @@ class IngestServices {
         const docs = await splitPlainText(rawDocs);
         await runEmbeddings(docs, document.filename, collectionName);
       } else {
-        throw new Error(
-          `Formato de archivo no soportado: ${document.mimetype}`
-        );
+        logger.error(`Formato de archivo no soportado: ${document.mimetype}`);
+        return;
+        // throw new Error(
+        //   `Formato de archivo no soportado: ${document.mimetype}`
+        // );
       }
     } catch (error) {
-      logger.error("Error al procesar el archivo", error);
-      throw new Error(`Error al procesar el archivo: ${document.filename}`);
+      logger.error(`Error al procesar el archivo: ${error}`);
+      return;
+      // throw new Error(`Error al procesar el archivo: ${document.filename}`);
     }
   }
 }

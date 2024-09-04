@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import { Prompt } from "../interfaces";
 import { upload } from "../config/promptconfig";
+import Logger from "../utils/logger";
+
+const logger = new Logger();
 
 export const uploadPromptDocument = upload.array("prompt", 10);
 
@@ -17,7 +20,7 @@ export async function handleUpload(req: Request, res: Response) {
             size: file.size,
           };
 
-          console.log("Archivo recibido:", prompt);
+          logger.log(`Archivo recibido: ${prompt}`);
           return prompt;
         })
       );
@@ -30,7 +33,7 @@ export async function handleUpload(req: Request, res: Response) {
       res.status(400).send("No se subieron archivos válidos.");
     }
   } catch (error) {
-    console.error("Error al procesar la solicitud:", error);
+    logger.error(`Error al procesar la solicitud: ${error}`);
     res.status(500).send("Error al procesar la solicitud");
   }
 }

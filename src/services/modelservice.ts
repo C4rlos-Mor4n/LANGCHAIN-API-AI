@@ -3,6 +3,9 @@ import { ChatCloudflareWorkersAI } from "@langchain/cloudflare";
 import { ChatAnthropic } from "@langchain/anthropic";
 import { ChatOpenAI } from "@langchain/openai";
 import { config } from "../config";
+import Logger from "../utils/logger";
+
+const logger = new Logger();
 
 export class ModelService {
   private apiKey: string;
@@ -28,7 +31,7 @@ export class ModelService {
 
   private createOpenAIModel() {
     const effectiveApiKey = this.apiKey || config.OPENAI_API_KEY;
-    console.log("effectiveApiKey", effectiveApiKey);
+    logger.log(`effectiveApiKey`);
     if (!effectiveApiKey) throw new Error("OPENAI_API_KEY is required");
     return new ChatOpenAI({
       model: process.env.OPENAI_MODEL || "gpt-3.5-turbo-0125",

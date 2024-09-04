@@ -2,6 +2,9 @@ import { Request, Response } from "express";
 import { IngestDocument } from "../interfaces";
 import { upload } from "../config/multerconfig";
 import ingestServices from "../services/ingestservices";
+import Logger from "../utils/logger";
+
+const logger = new Logger();
 
 export const uploadIngestDocument = upload.array("archivos", 10);
 export async function handleUpload(req: Request, res: Response) {
@@ -35,7 +38,7 @@ export async function handleUpload(req: Request, res: Response) {
       res.status(400).send("No se subieron archivos válidos.");
     }
   } catch (error) {
-    console.error("Error al procesar la solicitud:", error);
+    logger.error(`Error al procesar la solicitud: ${error}`);
     res.status(500).send("Error al procesar la solicitud");
   }
 }

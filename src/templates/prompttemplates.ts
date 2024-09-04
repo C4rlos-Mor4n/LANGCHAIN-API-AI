@@ -6,6 +6,9 @@ import {
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import Logger from "../utils/logger";
+
+const logger = new Logger();
 
 function readTemplateFromFile(fileName: string) {
   const dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -18,13 +21,13 @@ function readTemplateFromFile(fileName: string) {
     `${fileName}.txt`
   );
 
-  console.log(`Leyendo el archivo ${fileName} en ${filePath}`);
+  logger.log(`Leyendo el archivo ${fileName} en ${filePath}`);
 
   try {
     const template = fs.readFileSync(filePath, "utf-8");
     return template;
   } catch (error) {
-    console.error(`Error leyendo al leer archivo ${fileName} o no existe:`);
+    logger.error(`Error leyendo al leer archivo ${fileName} o no existe: ${error}`);
     // throw new Error(`No se pudo leer el archivo ${fileName} o no existe`);
     return "Responde con esta frase: He identificado un error en tu solicitud, por favor genera el template.";
   }

@@ -5,6 +5,9 @@ import chatModel from "./routes/chatmodelroutes";
 import SavePrompt from "./routes/promptroutes";
 import health from "./routes/health";
 import SaveKey from "./routes/savekeyroutes";
+import Logger from "./utils/logger";
+
+const logger = new Logger();
 
 const app = express();
 app.use(express.json());
@@ -26,5 +29,5 @@ app.use("/prompt", SavePrompt);
 app.use("/saveKey", SaveKey);
 
 app.listen(config.port, () => {
-  console.log(`Server running on http://${config.host}:${config.port}`);
+  logger.log(`Server running on http://${config.host}:${config.port}`);
 });

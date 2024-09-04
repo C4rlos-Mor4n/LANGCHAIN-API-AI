@@ -1,6 +1,9 @@
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 import { TaskType } from "@google/generative-ai";
 import { config } from "../config";
+import Logger from "../utils/logger";
+
+const logger = new Logger();
 
 export function getEmbeddings(filename: string) {
   if (config.EMBEDDINGS === "embedding-001") {
@@ -12,6 +15,7 @@ export function getEmbeddings(filename: string) {
     });
   }
   //Agregar más modelos de embeddings aquí
-
-  throw new Error("No se ha definido un modelo de embeddings");
+  logger.error("No se ha definido un modelo de embeddings");
+  return;
+  // throw new Error("No se ha definido un modelo de embeddings");
 }
