@@ -43,17 +43,17 @@ app.use((req, res, next) => {
 });
 
 // * Ingest Route
-// app.use("/ingest", ingest);
-app.post('/ingest', [
-  check('data').isString().trim().escape(),
-  (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    next();
-  }
-], ingest);
+app.use("/ingest", ingest);
+// app.post('/ingest', [
+//   check('data').isString().trim().escape(),
+//   (req, res, next) => {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({ errors: errors.array() });
+//     }
+//     next();
+//   }
+// ], ingest);
 
 // * Chat Route
 app.use("/ai", chatModel);

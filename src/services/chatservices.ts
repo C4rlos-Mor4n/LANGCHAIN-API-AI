@@ -23,7 +23,7 @@ class chatServices {
   ) {
     question = question.replace(/\{/g, "\\{").replace(/\}/g, "\\}");
 
-    const prompt = createPrompt(customer_name, PromptName, History);
+    const prompt = await createPrompt(customer_name, PromptName, History);
     const outputParser = new StringOutputParser();
     const vectorStore = await VectorStoreService.getVectorStore(collectionName);
     const serviceWithApiKey = new ModelService(apiKey);
@@ -44,7 +44,7 @@ class chatServices {
           },
           question: new RunnablePassthrough(),
         },
-        prompt as any,
+        prompt,
         modelAi as any,
         outputParser,
       ]as any);

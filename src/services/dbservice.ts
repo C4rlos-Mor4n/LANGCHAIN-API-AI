@@ -60,3 +60,19 @@ export async function addOrUpdateOpenAIKey(
     };
   }
 }
+
+export async function getPrompt(collectionName: string) {
+  
+  try {
+    const pb = new Pocketbase(config.POCKETBASE_HOST);
+    const response = await pb
+      .collection(`${config.POCKETBASE_DB_NAME_PROMPT}`)
+      .getFirstListItem(`promptName="${collectionName}"`)
+    return response.promptSrc
+  } catch (error) {
+    return {
+      status: "error",
+      message: error.message,
+    };
+  }
+}

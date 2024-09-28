@@ -18,6 +18,7 @@ export const config = {
   CLOUDFLARE_MODEL_NAME: process.env.CLOUDFLARE_MODEL_NAME || "",
   POCKETBASE_HOST: process.env.POCKETBASE_HOST || "",
   POCKETBASE_DB_NAME: process.env.POCKETBASE_DB_NAME || "",
+  POCKETBASE_DB_NAME_PROMPT: process.env.POCKETBASE_DB_NAME_PROMPT || "",
   ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY || "",
   NUMBER_OF_REQUESTS: process.env.NUMBER_OF_REQUESTS || 5,
 };

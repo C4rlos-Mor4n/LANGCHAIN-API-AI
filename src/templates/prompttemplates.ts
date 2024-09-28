@@ -6,6 +6,7 @@ import {
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { getPrompt } from "../services/dbservice";
 import Logger from "../utils/logger";
 
 const logger = new Logger();
@@ -25,6 +26,7 @@ function readTemplateFromFile(fileName: string) {
 
   try {
     const template = fs.readFileSync(filePath, "utf-8");
+    console.log(template);
     return template;
   } catch (error) {
     logger.error(`Error leyendo al leer archivo ${fileName} o no existe: ${error}`);
@@ -32,12 +34,18 @@ function readTemplateFromFile(fileName: string) {
     return "Responde con esta frase: He identificado un error en tu solicitud, por favor genera el template.";
   }
 }
-export function createPrompt(
+
+async function readTemplateFromDB(PromptName: string) {
+  const prompt = await getPrompt(PromptName);
+  return prompt;
+}
+
+export async function createPrompt(
   customer_name: string,
-  fileName: string,
+  PromptName: string,
   _history: string
 ) {
-  const systemPromptTemplate = readTemplateFromFile(fileName);
+  const systemPromptTemplate = await readTemplateFromDB(PromptName);
 
   if (!_history) {
     _history = "";

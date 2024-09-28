@@ -1,3 +1,29 @@
 2024-09-04 01:29:35 [INFO]: Server running on http://localhost:3000
 2024-09-04 01:31:11 [INFO]: Server running on http://localhost:3000
 2024-09-03 20:33:07 [INFO]: Server running on http://localhost:3000
+2024-09-27 18:57:19 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:00:29 [INFO]: Archivo recibido: [object Object]
+2024-09-27 19:04:35 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:06:26 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:06:57 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:08:13 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:11:57 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:13:31 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:14:20 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:15:28 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:18:23 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:20:23 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:22:03 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:22:41 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:23:48 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:26:01 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:26:05 [INFO]: effectiveApiKey
+2024-09-27 19:26:06 [ERROR]: Error en la cadena de ejecución en el servicio de chat: TypeError: promptValue.toChatMessages is not a function
+2024-09-27 19:26:07 [INFO]: effectiveApiKey
+2024-09-27 19:26:08 [ERROR]: Error en la cadena de ejecución en el servicio de chat: TypeError: promptValue.toChatMessages is not a function
+2024-09-27 19:28:01 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:28:05 [INFO]: effectiveApiKey
+2024-09-27 19:29:13 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:29:18 [INFO]: effectiveApiKey
+2024-09-27 19:30:32 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:30:39 [INFO]: effectiveApiKey
