@@ -1,3 +1,8 @@
 2024-09-04 01:29:35 [INFO]: Server running on http://localhost:3000
 2024-09-04 01:31:11 [INFO]: Server running on http://localhost:3000
 2024-09-03 20:33:07 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:32:06 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:32:41 [INFO]: Server running on http://localhost:3000
+2024-09-27 19:32:45 [INFO]: Archivo recibido: [object Object]
+2024-09-27 19:32:50 [INFO]: Leyendo el archivo aiclon_prompt en /home/ozzyoss77/Workspace/LANGCHAIN-API-AI/src/templates/prompt_templates/aiclon_prompt.txt
+2024-09-27 19:32:50 [INFO]: effectiveApiKey
