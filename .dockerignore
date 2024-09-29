@@ -1,7 +1,7 @@
 dist/*
 node_modules
 .env
-
+bot.log
 *_sessions
 *tokens
 .wwebjs*
