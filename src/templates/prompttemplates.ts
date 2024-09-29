@@ -26,7 +26,6 @@ function readTemplateFromFile(fileName: string) {
 
   try {
     const template = fs.readFileSync(filePath, "utf-8");
-    console.log(template);
     return template;
   } catch (error) {
     logger.error(`Error leyendo al leer archivo ${fileName} o no existe: ${error}`);

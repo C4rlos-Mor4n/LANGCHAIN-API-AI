@@ -13,7 +13,7 @@ const queue = new Queue({
 
 export const responseChatModel = async (req: Request, res: Response) => {
   const { Question, Name, collectionName, PromptName, History } = req.body;
-  if (!Question || !Name || !collectionName || !PromptName || !History) {
+  if (!Question || !collectionName || !PromptName || !History) {
     return res.status(400).json({
       message:
         "Requiere el campo Question, Name, collectionName, PromptName y History",
