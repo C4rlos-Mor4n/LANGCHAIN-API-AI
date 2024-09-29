@@ -1,6 +1,4 @@
 import { createLogger, format, transports, Logger as WinstonLogger } from 'winston';
-import * as path from 'path';
-import { fileURLToPath } from 'url';
 import moment from 'moment-timezone';
 import 'dotenv/config';
 
@@ -9,10 +7,8 @@ class Logger {
     private timezone: string;
 
     constructor() {
-        const __filename = fileURLToPath(import.meta.url);
-        const __dirname = path.dirname(__filename);
         this.timezone = process.env.API_TIMEZONE || 'UTC';
-        const logFilePath = path.join(__dirname, '..', '..', 'bot.log');
+        const logFilePath = `${process.cwd()}/bot.log`;
 
         this.logger = createLogger({
             level: 'info',
