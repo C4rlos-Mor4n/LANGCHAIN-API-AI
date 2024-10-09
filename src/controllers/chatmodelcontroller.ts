@@ -3,8 +3,10 @@ import { getOpenAIKey } from "../services/dbservice";
 import { Request, Response } from "express";
 import { config } from "../config";
 import Queue from "queue-promise";
+import Logger from "src/utils/logger";
 
 const chat = new chatServices();
+const logger = new Logger();
 
 const queue = new Queue({
   concurrent: config.NUMBER_OF_REQUESTS as any,
@@ -30,18 +32,21 @@ export const responseChatModel = async (req: Request, res: Response) => {
   }
 
 
+
   try {
     queue.enqueue(async () => {
       try {
+
         const { Response } = await chat.runChatServices(
           Question,
           Name,
           collectionName,
           PromptName,
           History,
-          apiKeyOpenAI
+          apiKeyOpenAI,
+          "OpenAI"
         );
-
+        logger.log(`Ussing OpenAI for ${collectionName}, ${PromptName}`);
         res.status(200).json({ Response });
       } catch (error) {
         const { Response } = await chat.runChatServices(
@@ -50,9 +55,10 @@ export const responseChatModel = async (req: Request, res: Response) => {
           collectionName,
           PromptName,
           History,
-          apiKeyAnthropic
+          apiKeyAnthropic,
+          "Anthropic"
         );
-
+        logger.log(`Ussing Anthropic for ${collectionName}, ${PromptName}`);
         res.status(200).json({ Response });
       }
     });

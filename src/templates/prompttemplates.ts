@@ -2,6 +2,7 @@ import {
   ChatPromptTemplate,
   SystemMessagePromptTemplate,
   HumanMessagePromptTemplate,
+  AIMessagePromptTemplate,
 } from "@langchain/core/prompts";
 import fs from "fs";
 import path from "path";
@@ -60,7 +61,9 @@ export async function createPrompt(
         .replace("{customer_name}", customer_name)
         .replace("{history}", _history)
     ),
-    HumanMessagePromptTemplate.fromTemplate(`User pregunta: {question}`),
+    HumanMessagePromptTemplate.fromTemplate(`User last interaction: {question}`),
+    // AIMessagePromptTemplate.fromTemplate(`Aca lo que contesta la IA`),
+    // HumanMessagePromptTemplate.fromTemplate(`User pregunta: {question}`),
   ];
 
   return ChatPromptTemplate.fromMessages(messages);

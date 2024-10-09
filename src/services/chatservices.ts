@@ -19,7 +19,8 @@ class chatServices {
     collectionName: string,
     PromptName: string,
     History: string,
-    apiKey: string
+    apiKey: string,
+    model:string
   ) {
     question = question.replace(/\{/g, "\\{").replace(/\}/g, "\\}");
 
@@ -27,7 +28,7 @@ class chatServices {
     const outputParser = new StringOutputParser();
     const vectorStore = await VectorStoreService.getVectorStore(collectionName);
     const serviceWithApiKey = new ModelService(apiKey);
-    const modelAi = await serviceWithApiKey.getModel();
+    const modelAi = await serviceWithApiKey.getModel(model);
 
 
     const NumberRetriver = parseInt(config.RETRIVER as string);

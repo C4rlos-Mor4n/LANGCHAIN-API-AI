@@ -14,8 +14,8 @@ export class ModelService {
     this.apiKey = apiKey;
   }
 
-  async getModel() {
-    switch (config.ModelAI) {
+  async getModel(ModelAI: string) {
+    switch (ModelAI) {
       case "OpenAI":
         return this.createOpenAIModel();
       case "cloudflare":
